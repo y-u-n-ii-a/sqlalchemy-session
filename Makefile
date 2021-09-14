@@ -1,8 +1,6 @@
 .PHONY: all \
 		setup \
-		black \
-		makemigrations\
-		migrate
+		black
 
 venv/bin/activate: ## alias for virtual environment
 	python -m venv venv
