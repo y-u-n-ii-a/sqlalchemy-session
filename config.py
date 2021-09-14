@@ -1,4 +1,1 @@
-import os
-
-basedir = os.path.dirname(__file__)
-SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir, "test.sqlite")
+SQLALCHEMY_DATABASE_URI = "postgresql://oxygen:oxygen@localhost:5432/sqlalchemy-session"
