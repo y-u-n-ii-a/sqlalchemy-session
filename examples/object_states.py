@@ -1,21 +1,14 @@
 import sqlalchemy as sa
 from sqlalchemy.orm import Session
 
+from model import User, meta
 from config import SQLALCHEMY_DATABASE_URI
-from model import meta, User
 
 engine = sa.create_engine(SQLALCHEMY_DATABASE_URI)
 
-
 if __name__ == "__main__":
     meta.create_all(engine)
-
     session = Session(engine, autoflush=False, autocommit=False)
-
-    # identity map
-    user1 = session.query(User).filter_by(id=1).first()
-    user2 = session.query(User).filter_by(id=1).first()
-    print(user2 is user1)
 
     # object states
     user = User(name="eva")
@@ -33,11 +26,11 @@ if __name__ == "__main__":
     user.name = "sasha"  # dirty
     user.print_state("User name changed")
 
-    session.expire(user)
-    user.print_state("User expired")
+    session.rollback()
+    user.print_state("Session rolled back")
 
     session.delete(user)
     user.print_state("User deleted")
 
-    session.commit()
+    session.commit()  # deleted
     user.print_state("Session commited")
